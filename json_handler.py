@@ -3,13 +3,20 @@ import json
 
 
 def save_data(data):
-	with open("companies.json", 'w', encoding='utf-8') as f:
+	'''
+	save the current list of dictionaries to companies json located in
+	/var/company_data
+	'''
+	with open("/var/company_data/companies.json", 'w', encoding='utf-8') as f:
 		json.dump(data, f, ensure_ascii=False, indent=2)
 
 
 def search_json(token):
+	'''
+	try to find if the company inputted is in the json file
+	'''
 	dict = {}
-	with open("/home/tysonmd/company_info/companies.json", "rb") as s_file:
+	with open("/var/company_data/companies.json", "rb") as s_file:
 		list_dict = json.load(s_file)
 
 	for company in list_dict:
@@ -24,7 +31,11 @@ def search_json(token):
 
 
 def add_json(dict):
-	with open("companies.json", "rb") as s_file:
+	'''
+	add a dictionary to the list of dictionaries and save it to
+	companies.json
+	'''
+	with open("/var/company_data/companies.json", "rb") as s_file:
 		list_dict = json.load(s_file)
 	list_dict.append(dict)
 	save_data(list_dict)
@@ -32,7 +43,10 @@ def add_json(dict):
 
 
 def clean_file():
-	with open("companies.json", "rb") as s_file:
+	'''
+	clean the character "/xa0" from the file
+	'''
+	with open("/var/company_data/companies.json", "rb") as s_file:
 		list_dict = json.load(s_file)
 
 	for company in list_dict:
@@ -46,4 +60,5 @@ def clean_file():
 		save_data(list_dict)
 
 #clean_file()
-#please = search_json("Edward Jones Investments")
+please = search_json("Edward Jones Investments")
+print(please)
