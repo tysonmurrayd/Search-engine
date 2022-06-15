@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import cisa
 
 
 def save_data(data):
@@ -42,7 +43,7 @@ def add_json(dict):
 
 
 
-def clean_file():
+def better_cisa():
 	'''
 	clean the character "/xa0" from the file
 	'''
@@ -50,15 +51,11 @@ def clean_file():
 		list_dict = json.load(s_file)
 
 	for company in list_dict:
-		for key, value in company.items():
-			if isinstance(value, list):
-				for v in value:
-					v.strip("\\xa")
-			else:
-				value.strip("\\xa")
+		cisa.find_cisa(company)
 
-		save_data(list_dict)
 
-#clean_file()
+	save_data(list_dict)
+
+better_cisa()
 #please = search_json("Edward Jones Investments")
 #print(please)
