@@ -13,7 +13,17 @@ def get_content(l_tech):
     
     return r_dict
 
+def get_articles(soup):
+    r_dict = {}
+    articles_class = soup.find("div", class_="details-html", style="padding: 1em;")
+    articles = articles_class.find_all("li")
+    for article in articles:
+        r_dict[article.find('a').get_text()] = article.find("a").get("href")
+    return r_dict
+    
+
 def get_tech(company):
+    r_list = []
     search_url = "https://techstacks.io/stacks/?nameContains=" + company
     b_url = "https://techstacks.io"
     search_soup = scrape_dynamic.get_dynamic(search_url)
@@ -25,10 +35,13 @@ def get_tech(company):
         # print(technologies_class)
         tech = technologies_class.find_all("div", class_="layout tech-info")
         # print(tech)
-        result = get_content(tech)
+        r_list.append(get_content(tech))
+        r_list.append(get_articles(soup))
     except Exception as e:
         print(e)
         return {}
 
-    return result
+    return r_list
 
+# l = get_tech("AT&T")
+# print(l)

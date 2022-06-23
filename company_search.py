@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import sys
 from PIL import Image
 import urllib.request
-import scrape_cybernews, cisa, json_handler
+import scrape_cybernews, cisa, json_handler, industry_news, technology
 
 #def big_scrape():
 #	base_url = "https://en.wikipedia.org"
