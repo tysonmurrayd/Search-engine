@@ -5,6 +5,9 @@ import sys
 from PIL import Image
 import urllib.request
 
+from soupsieve import select
+import scrape_dynamic
+
 
 def print_news(dict):
 	list_info = dict.items()
@@ -97,6 +100,137 @@ def scrape_nyt(url):
 	except Exception:
 		#print("sorry, cannot find any wired news about this company <{0_0}>")
 		return w_dict
+'''-----------------------------------------------------------------------------------'''
+
+'''get from krebs on security'''
+
+def krebs_dict(l_articles):
+	r_dict = {}
+	for index,article in enumerate(l_articles):
+		if index==3:
+			break
+		dict_key = article.find('h2').get_text(" ", strip=True)
+		dict_url = article.find('a').get("href")
+		r_dict[dict_key] = dict_url
+	return r_dict
+
+
+def scrape_krebs(url):
+	soup = news_soup(url)
+	w_dict = {}
+	try:
+		broad_class = soup.find(id="content")
+		l_articles = broad_class.find_all('article')
+		w_dict = krebs_dict(l_articles)
+		return w_dict
+	except Exception:
+		#print("sorry, cannot find any wired news about this company <{0_0}>")
+		return w_dict
+
+'''-----------------------------------------------------------------------------------'''
+
+'''get from dark reading'''
+
+def darkread_dict(l_articles):
+	r_dict = {}
+	for index,article in enumerate(l_articles):
+		if index==3:
+			break
+		dict_key = article.find('h2').get_text(" ", strip=True)
+		dict_url = article.find('a').get("href")
+		r_dict[dict_key] = dict_url
+	return r_dict
+
+
+def scrape_darkread(url):
+	soup = scrape_dynamic.get_dynamic(url)
+	w_dict = {}
+	try:
+		broad_class = soup.find('div', class_="result")
+		l_articles = broad_class.find_all('div', class_="offset-md-4 col-md-8 p-0")
+		w_dict = darkread_dict(l_articles)
+		return w_dict
+	except Exception:
+		#print("please try again")
+		return w_dict
+
+'''------------------------------------------------------------------------------------'''
+'''get from bleeping computers'''
+
+def bleepingcomp_dict(l_articles):
+	r_dict = {}
+	for index,article in enumerate(l_articles):
+		if index==3:
+			break
+		dict_key = article.find('a', class_="gs-title").get_text(" ", strip=True)
+		dict_url = article.find('a', class_="gs-title").get("href")
+		r_dict[dict_key] = dict_url
+	return r_dict
+
+
+def scrape_bleepingcomp(url):
+	soup = scrape_dynamic.get_dynamic(url)
+	w_dict = {}
+	try:
+		broad_class = soup.find('div', class_="gsc-expansionArea")
+		l_articles = broad_class.find_all('div', class_="gsc-webResult gsc-result")
+		w_dict = bleepingcomp_dict(l_articles)
+		return w_dict
+	except Exception:
+		#print("please try again")
+		return w_dict
+
+'''------------------------------------------------------------------------------------'''
+'''get from kaspersky'''
+
+def kaspersky_dict(l_articles):
+	r_dict = {}
+	for index,article in enumerate(l_articles):
+		if index==3:
+			break
+		dict_key = article.find('a').get_text(" ", strip=True)
+		dict_url = article.find('a').get("href")
+		r_dict[dict_key] = dict_url
+	return r_dict
+
+
+def scrape_kaspersky(url):
+	soup = scrape_dynamic.get_dynamic(url)
+	w_dict = {}
+	try:
+		broad_class = soup.find('main', id="main")
+		l_articles = broad_class.find_all('div', class_="ResultList_item__34Q1x")
+		w_dict = kaspersky_dict(l_articles)
+		return w_dict
+	except Exception:
+		#print("please try again")
+		return w_dict
+
+'''------------------------------------------------------------------------------------'''
+'''get from broadcom'''
+
+def broadcom_dict(l_articles):
+	r_dict = {}
+	for index,article in enumerate(l_articles):
+		if index==3:
+			break
+		dict_key = article.find('span', class_="resultTitle").get_text(" ", strip=True)
+		dict_url = article.find('a').get("href")
+		r_dict[dict_key] = dict_url
+	return r_dict
+
+
+def scrape_broadcom(url):
+	soup = scrape_dynamic.get_dynamic(url)
+	w_dict = {}
+	try:
+		broad_class = soup.find('div', id="main")
+		l_articles = broad_class.find_all('div', class_="d-flex align-items-start global-site-search")
+		w_dict = broadcom_dict(l_articles)
+		return w_dict
+	except Exception:
+		#print("please try again")
+		return w_dict
 
 '''------------------------------------------------------------------------------------'''
 
@@ -105,7 +239,18 @@ def retrieve_news(input):
 	news_url = "https://cybernews.com/search/"
 	wired_url = "https://www.wired.com/search/?q="
 	nyt_url = "https://www.nytimes.com/search?query="
+	krebs_url = "https://krebsonsecurity.com/?s="
+	darkread_url = "https://www.darkreading.com/search?q="
+	bleepingcomp_url = "https://www.bleepingcomputer.com/search/?q="
+	kaspersky_url = "https://usa.kaspersky.com/search?query="
+	broadcom_url = "https://www.broadcom.com/site-search?q="
+
 	r_list.append(get_news(news_url + input))
 	r_list.append(scrape_wired(wired_url + input))
 	r_list.append(scrape_nyt(nyt_url + input))
+	r_list.append(scrape_krebs(krebs_url + input))
+	r_list.append(scrape_darkread(darkread_url + input))
+	r_list.append(scrape_bleepingcomp(bleepingcomp_url + input))
+	r_list.append(scrape_kaspersky(kaspersky_url + input))
+	r_list.append(scrape_broadcom(broadcom_url + input))
 	return r_list

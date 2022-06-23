@@ -9,6 +9,7 @@ from PIL import Image
 import urllib.request
 import scrape_cybernews, cisa, json_handler, industry_news, technology
 
+
 #def big_scrape():
 #	base_url = "https://en.wikipedia.org"
 #	url = "https://en.wikipedia.org/wiki/List_of_largest_companies_in_the_United_States_by_revenue"
@@ -134,10 +135,16 @@ def input_handling():
 	return comp
 
 def manage_cybernews(info_dict, inputted):
-	'''prints and retrieves first three links from cybernews.com'''
+	'''prints and retrieves first three links from desired website'''
 	news_url = "https://cybernews.com/search/"
 	wired_url = "https://www.wired.com/search/?q="
 	nyt_url = "https://www.nytimes.com/search?query="
+	krebs_url = "https://krebsonsecurity.com/?s="
+	darkread_url = "https://www.darkreading.com/search?q="
+	bleepingcomp_url = "https://www.bleepingcomputer.com/search/?q="
+	kaspersky_url = "https://usa.kaspersky.com/search?query="
+	broadcom_url = "https://www.broadcom.com/site-search?q="
+
 	print()
 	print("LATEST CYBER NEWS\n", "----------------------------------------")
 	cyber_dict = scrape_cybernews.get_news(news_url + inputted)
@@ -148,6 +155,21 @@ def manage_cybernews(info_dict, inputted):
 	print("NEW YORK TIMES NEWS\n", "---------------------------------------")
 	nyt_dict = scrape_cybernews.scrape_nyt(nyt_url + inputted)
 	scrape_cybernews.print_news(nyt_dict)
+	print("KREBS ON SECURITY NEWS\n", "---------------------------------------")
+	krebs_dict = scrape_cybernews.scrape_krebs(krebs_url + inputted)
+	scrape_cybernews.print_news(krebs_dict)
+	print("DARK READING NEWS\n", "---------------------------------------")
+	darkread_dict = scrape_cybernews.scrape_darkread(darkread_url + inputted)
+	scrape_cybernews.print_news(darkread_dict)
+	print("BLEEPING COMPUTERS NEWS\n", "---------------------------------------")
+	bleepingcomp_dict = scrape_cybernews.scrape_bleepingcomp(bleepingcomp_url + inputted)
+	scrape_cybernews.print_news(bleepingcomp_dict)
+	print("KASPERSKY NEWS\n", "---------------------------------------")
+	kaspersky_dict = scrape_cybernews.scrape_kaspersky(kaspersky_url + inputted)
+	scrape_cybernews.print_news(kaspersky_dict)
+	print("BROADCOM NEWS\n", "---------------------------------------")
+	broadcom_dict = scrape_cybernews.scrape_broadcom(broadcom_url + inputted)
+	scrape_cybernews.print_news(broadcom_dict)
 
 def from_website(input):
 	r_list = []
