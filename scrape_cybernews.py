@@ -7,6 +7,7 @@ import urllib.request
 
 from soupsieve import select
 import scrape_dynamic
+import call_api
 
 
 def print_news(dict):
@@ -235,6 +236,7 @@ def scrape_broadcom(url):
 '''------------------------------------------------------------------------------------'''
 
 def retrieve_news(input):
+	# scrape_dynamic.start_driver()
 	r_list = []
 	news_url = "https://cybernews.com/search/"
 	wired_url = "https://www.wired.com/search/?q="
@@ -249,8 +251,13 @@ def retrieve_news(input):
 	r_list.append(scrape_wired(wired_url + input))
 	r_list.append(scrape_nyt(nyt_url + input))
 	r_list.append(scrape_krebs(krebs_url + input))
-	r_list.append(scrape_darkread(darkread_url + input))
-	r_list.append(scrape_bleepingcomp(bleepingcomp_url + input))
-	r_list.append(scrape_kaspersky(kaspersky_url + input))
-	r_list.append(scrape_broadcom(broadcom_url + input))
+	# r_list.append(scrape_darkread(darkread_url + input))
+	r_list.append(call_api.get_DarkReading(input))
+	# r_list.append(scrape_bleepingcomp(bleepingcomp_url + input))
+	# r_list.append(scrape_kaspersky(kaspersky_url + input))
+	# r_list.append(scrape_broadcom(broadcom_url + input))
+	# scrape_dynamic.quit_driver()
 	return r_list
+
+# l = retrieve_news('walmart')
+# print(l)

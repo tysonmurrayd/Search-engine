@@ -1,0 +1,132 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <style>
+            html, body {
+                width: 100%;
+                height:100%;
+            }
+            body {
+                background: white;
+            }
+            .search-bar {
+                position: absolute;
+                top: 15%;
+                left: 34%;
+                right: 32%;
+                /* transform: translate(-50%, -50%); */
+                background: #D3D3D3;
+                height: 40px;
+                border-radius: 40px;
+                padding: 25px;
+            }
+            #container {
+                position: absolute;
+                top: 30%;
+                width: 60%;
+                border: 5px solid black;
+                left: 15%;
+                right: 15%;
+                background-color: aliceblue;
+                border-radius: 50px;
+                padding: 40px;
+            }
+            #name {
+                position: absolute;
+                left: 3%;
+                right: 15%;
+                height: 5px;
+                border-radius: 20px;
+                padding: 20px;
+                /* width: 500px;  */
+            }
+            .file_submit {
+                position: absolute;
+                right: 5%;
+                width: 50px;
+                height: 40px;
+                border: 1px solid beige;
+                font-size: 20px;
+                border-radius: 50px;
+                cursor: pointer;
+            }
+            #loader {
+                visibility: hidden;
+                display: none;
+                position: absolute;
+                top: 35%;
+                left: 46%;
+                border: 16px solid #f3f3f3;
+                border-top: 16px solid #3498db;
+                border-radius: 50%;
+                width: 120px;
+                height: 120px;
+                animation: spin 2s linear infinite;
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    </head>
+    <body>
+        <center>
+            <h1 style="color: black; font-size: 60px;"> Company Search </h1>
+        </center>
+        <script type="text/javascript">// <![CDATA[
+            function loading(){
+                $("#loader").css('visibility', 'visible');
+                $("#loader").show()
+                $("#container").hide();
+            }
+        </script>
+        <div id="loader"></div>
+        <form class = "grid" action="/result" method="POST">
+            <div class="search-bar">
+                <input type="text" name="name" id="name" placeholder="Try Searching a Company ;)">
+                <button type="Submit" class="file_submit" onclick="loading()"> <i class="fa fa-search"> </i></button>
+            </div>
+            <!-- {% if name %}
+                <div id="container">
+                    {% for dict in name %}
+                        {% if loop.index == 2 %}
+                            <h1 style="color: black";> News from Cybernews.com </h1>
+                        {% elif loop.index == 3 %}
+                            <h1 style="color: black";> News from wired.com </h1>
+                        {% elif loop.index == 4 %}
+                            <h1 style="color: black";> News from newyorktimes.com </h1>
+                        {% elif loop.index == 5 %}
+                            <h1 style="color: black";> News by Industry </h1>
+                        {% endif %}
+                        {% if loop.index ==1 %}
+                            {% for key, value in dict.items() %}
+                                {% if key == "logo url"%}
+                                    <br>
+                                    <br>
+                                    <center><img src={{value}} alt="Company Logo"></center>
+                                {% else %}
+                                    {% if value != [] and value != "" and value != None %}
+                                        <h3> {{key}}: {{value}}</h3>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% for key, value in dict.items() %}
+                                {% if value is iterable and (value is not string and value is not mapping) %}
+                                    <h3 style="font-size: 30px;">{{key}}</h3>
+                                    {%for pic in value%}
+                                        <img src={{pic}} alt="value representation" style=" object-fit:contain; width: 100px;height:110px;">
+                                    {%endfor%}
+                                {%else%}
+                                    <h3>{{key}}</h3><a href={{value}}> {{value}}</a>
+                                {%endif%}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %} -->
+        </form>
+    </body>
+</html>

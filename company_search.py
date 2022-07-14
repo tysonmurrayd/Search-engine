@@ -8,6 +8,8 @@ import sys
 from PIL import Image
 import urllib.request
 import scrape_cybernews, cisa, json_handler, industry_news, technology
+import concurrent.futures
+import time
 
 
 #def big_scrape():
@@ -182,7 +184,7 @@ def from_website(input):
 			json_handler.add_json(info_dict)
 	r_list.append(info_dict)
 	input = input.replace("_", " ")
-	r_list = r_list + scrape_cybernews.retrieve_news(input)
+	r_list = r_list + scrape_cybernews.retrieve_news(input) + technology.get_tech(input)
 	return r_list
 
 def main():
@@ -199,3 +201,5 @@ def main():
 
 if __name__ == "__main__":
 	main()
+# with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+#     executor.map(from_website)
