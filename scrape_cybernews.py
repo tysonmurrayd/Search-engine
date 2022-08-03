@@ -235,7 +235,7 @@ def scrape_broadcom(url):
 
 '''------------------------------------------------------------------------------------'''
 
-def retrieve_news(input):
+def retrieve_news(input, news):
 	# scrape_dynamic.start_driver()
 	r_list = []
 	news_url = "https://cybernews.com/search/"
@@ -247,17 +247,34 @@ def retrieve_news(input):
 	kaspersky_url = "https://usa.kaspersky.com/search?query="
 	broadcom_url = "https://www.broadcom.com/site-search?q="
 
-	r_list.append(get_news(news_url + input))
-	r_list.append(scrape_wired(wired_url + input))
-	r_list.append(scrape_nyt(nyt_url + input))
-	r_list.append(scrape_krebs(krebs_url + input))
+
+	if 'g-news' in news:
+		r_list.append(get_news(news_url + input))
+		r_list.append(scrape_wired(wired_url + input))
+		r_list.append(scrape_nyt(nyt_url + input))
+	elif 'c-news' in news:
+		r_list.append(scrape_krebs(krebs_url + input))
+		r_list.append(call_api.get_DarkReading(input))
+	else:
+		r_list.append(get_news(news_url + input))
+		r_list.append(scrape_wired(wired_url + input))
+		r_list.append(scrape_nyt(nyt_url + input))
+		r_list.append(scrape_krebs(krebs_url + input))
+		r_list.append(call_api.get_DarkReading(input))
+
+	# r_list.append(get_news(news_url + input))
+	# r_list.append(scrape_wired(wired_url + input))
+	# r_list.append(scrape_nyt(nyt_url + input))
+	# r_list.append(scrape_krebs(krebs_url + input))
 	# r_list.append(scrape_darkread(darkread_url + input))
-	r_list.append(call_api.get_DarkReading(input))
+	# r_list.append(call_api.get_DarkReading(input))
 	# r_list.append(scrape_bleepingcomp(bleepingcomp_url + input))
 	# r_list.append(scrape_kaspersky(kaspersky_url + input))
 	# r_list.append(scrape_broadcom(broadcom_url + input))
 	# scrape_dynamic.quit_driver()
 	return r_list
 
-# l = retrieve_news('walmart')
+# scrape_dynamic.start_driver()
+# l = scrape_broadcom("https://www.broadcom.com/site-search?q=apple")
 # print(l)
+# scrape_dynamic.quit_driver()
