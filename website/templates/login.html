@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %} Login Page {% endblock %}
+{% block content %}
+<html>
+<head>
+  <title>Account Login</title>
+  <link rel="stylesheet" type= "text/css" href="../css/style.css">
+</head>
+<body>
+
+	<section class="header">
+		<nav>
+			<a href="https://apollo-is.com/"><image src="{{ url_for('static', filename='images/logo.png')}}"></a>
+			<div class="links">
+				<ul>
+                	<li><a href="#" title="home"> Home </a></li>
+                	<li><a href="{{ url_for('register') }}" title="register"> Register </a></li>
+            	</ul>
+			</div>
+		</nav>
+
+		<div class="input">
+			<h1> Welcome to the Apollo Web Scraper!</h1>
+			<h2> Login below to gain acces.</h2>
+			<h3><br><br>Please enter your email address and password:<br><br></h3>
+			<form method="post" action="/login">
+  			<div class="input-group">
+  				<label>Email:</label>
+  				<input type="text" name="email" >
+  			</div>
+  			<div class="input-group">
+  				<label>Password:</label>
+  				<input type="password" name="password">
+  			</div>
+			<br>
+  			<div class="input-group">
+  				<button type="submit" class="btn" name="login">Login</button>
+  			</div>
+  			<p>
+				  <br>Not yet a member? <a href="{{ url_for('register') }}">Sign Up</a>
+			</p>
+  			</form>
+		</div>
+	</section>
+</body>
+</html>
+{% endblock%}
