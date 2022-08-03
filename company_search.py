@@ -173,7 +173,7 @@ def manage_cybernews(info_dict, inputted):
 	broadcom_dict = scrape_cybernews.scrape_broadcom(broadcom_url + inputted)
 	scrape_cybernews.print_news(broadcom_dict)
 
-def from_website(input):
+def from_website(input, news):
 	r_list = []
 	wiki_url = "https://en.wikipedia.org/wiki/"
 	info_dict = json_handler.search_json(input)
@@ -184,7 +184,7 @@ def from_website(input):
 			json_handler.add_json(info_dict)
 	r_list.append(info_dict)
 	input = input.replace("_", " ")
-	r_list = r_list + scrape_cybernews.retrieve_news(input) + technology.get_tech(input)
+	r_list += scrape_cybernews.retrieve_news(input, news) + technology.get_tech(input)
 	return r_list
 
 def main():
@@ -199,7 +199,11 @@ def main():
 	inputted = inputted.replace("_", " ")
 	manage_cybernews(info_dict, inputted)
 
-if __name__ == "__main__":
-	main()
+# if __name__ == "__main__":
+# 	main()
 # with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
 #     executor.map(from_website)
+
+
+# d = from_website('walmart')
+# print(d)
