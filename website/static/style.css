@@ -29,19 +29,6 @@ nav img {
     padding: 8px 12px;
     position: relative;
 }
-#check_label {
-    position: absolute;
-    right: 50%;
-}
-#n-mail {
-    position: absolute;
-    left: 80%;
-}
-.errmessage{
-    position: absolute;
-    left: 45%;
-    top: 46%;
-}
 .links ul li a{
     color: white;
     text-decoration: none;
@@ -53,7 +40,6 @@ nav img {
     position: absolute;
     top: 50%;
     left: 50%;
-    right: 50%;
     transform: translate(-50%,-50%);
     text-align: center;
 }
