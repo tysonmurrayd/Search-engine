@@ -7,71 +7,111 @@
                 background-color: rgb(0, 255, 217);
             } */
             html, body {
+                margin: 0%;
                 width: 100%;
                 height:100%;
             }
             body {
                 background: white;
             }
-            .search-bar {
+            /* .search-bar {
                 position: absolute;
                 top: 15%;
                 left: 34%;
                 right: 32%;
-                /* transform: translate(-50%, -50%); */
                 background: #D3D3D3;
-                height: 40px;
+                height: 50px;
                 border-radius: 40px;
                 padding: 25px;
-            }
-            #container {
-                position: absolute;
-                top: 30%;
-                /* width: 60%; */
+            } */
+            .container {
+                position: relative;
                 border: 5px solid black;
-                left: 15%;
-                right: 15%;
+                /* left: 15%;
+                right: 15%; */
+                width: 75%;
                 background-color: aliceblue;
                 /* border-radius: 50px; */
                 padding: 40px;
+                left: 50%;
+                transform: translateX(-50%);
+                animation: fade-in 2s;
             }
-            #name {
+            @keyframes fade-in{
+                0% { opacity: 0; }
+                100% { opacity: 1; }
+            }
+            #banner {
+                /* bottom: 60%; */
+                width: 100%;
+                height: 270px;
+                background-color: #3498db;
+                background-position: center;
+                border-width: 5px;
+                border-color: black;
+            }
+            .name {
                 position: absolute;
-                left: 3%;
-                right: 15%;
-                height: 5px;
+                top: 15%;
+                left: 25%;
+                right: 25%;
+                height: 49px;
                 border-radius: 20px;
                 padding: 20px;
-                /* width: 500px; */
             }
             .file_submit {
                 position: absolute;
-                right: 5%;
-                width: 50px;
-                height: 40px;
+                top: 15%;
+                right: 23%;
+                width: 60px;
+                height: 49px;
                 border: 1px solid beige;
                 font-size: 20px;
-                border-radius: 50px;
+                border-bottom-right-radius: 50%;
+                border-top-right-radius: 50%;
                 cursor: pointer;
             }
-            #news {
-                background-color: aliceblue;
+            #industry {
                 position: absolute;
-                border-color: black;
-                left: 15%;
-                right: 15%;
-                /* position: relative; */
-                top: 60%;
+                top: 23%;
+                left: 28%;
+            }
+            #check_label {
+                position: absolute;
+                top: 23%;
+                left: 30%;
+            }
+            .links {
+                position: absolute;
+                right: 5%;
+            }
+            .result-footer {
+                position: relative;
+	            width: 100%;
+                left: 0;
+                bottom: 0;
+                height: 150px;
+                background-color: #3498db;
+                /* color: white; */
+                text-align: center;
+            }
+            #n-input {
+                position: absolute;
+                top: 21%;
+                left: 38%;
+                height: 50px;
             }
             #loader {
+                visibility: hidden;
+                display: none;
                 position: absolute;
-                top: 35%;
+                top: 45%;
                 left: 46%;
-                border: 16px solid #f3f3f3; /* Light grey */
-                border-top: 16px solid #3498db; /* Blue */
+                border: 16px solid #f3f3f3;
+                border-top: 16px solid #3498db;
                 border-radius: 50%;
-                width: 120px;
-                height: 120px;
+                width: 100px;
+                height: 100px;
                 animation: spin 2s linear infinite;
             }
 
@@ -84,33 +124,45 @@
     <body>
         <script type="text/javascript">// <![CDATA[
             function loading(){
+                $("#loader").css('visibility', 'visible');
                 $("#loader").show();
                 $("#container").hide();       
             }
         </script>
-        <center>
-            <h1 style="color: black; font-size: 60px;"> Company Search </h1>
-        </center>
         <div id="loader"></div>
         <form class = "grid" action="/result" method="POST">
-            <div class="search-bar">
+            <div id="banner">
+                <div class="links">
+                    <a href="{{ url_for('logout') }}" title="Logout"> Logout </a>
+                </div>
+                <div class="navbar">
+                    <a href="/home"> <img src="https://lh3.googleusercontent.com/4DDY-4VyLHHqbmcbRWM6_HJ3D9TrwEmEPAwUOb5C4P7eRPuaVHa0yp5oefwvupiudLNfsSA5KRBKho1IjPlEzyBtCbZRNIwstKg2=s0" alt="apollo logo"></a>
+                </div>
                 <!-- <label for="Name"> Enter a company:</label> -->
-                <input type="text" name="name" id="name" placeholder="Try Searching a Company ;)">
+                <input type="text" name="name" class="name" maxlength="75" placeholder="Try Searching a Company ;)">
                 <button type="Submit" class="file_submit" onclick="loading()"> <i class="fa fa-search"> </i></button>
+                <input type="checkbox" id="industry" name="industry">
+                <label for="industry" id="check_label"> Include industry news</label>
+                <fieldset id="n-input">
+                    <legend>News</legend>
+                    <label for="General News">General News</label>
+                    <input type="radio" id="g-news" name="inputted-news">
+
+                    <label for="Cyber News">Cyber News</label>
+                    <input type="radio" id="c-news" name="inputted-news">
+
+                    <label for="All">All</label>
+                    <input type="radio" id="a-news" name="inputted-news" checked>
+                </fieldset>
             </div>
+            {% if nothing %}
+                <h2 style="color: black; position: absolute; top: 40%; left: 50%; transform: translateX(-50%);">{{nothing}}</h2>
+            {%endif%}
             {% if name %}
-                <div id="container">
-                    {% for dict in name %}
-                        <!-- {% if loop.index == 2 %}
-                            <h1 style="color: black";> News from Cybernews.com </h1>
-                        {% elif loop.index == 3 %}
-                            <h1 style="color: black";> News from wired.com </h1>
-                        {% elif loop.index == 4 %}
-                            <h1 style="color: black";> News from newyorktimes.com </h1>
-                        {% elif loop.index == 5 %}
-                            <h1 style="color: black";> News by Industry </h1>
-                        {% endif %} -->
-                        {% if loop.index ==1 %}
+                {% for dict in name %}
+                    {% if loop.index == 1 %}
+                        <br>
+                        <div class="container">
                             {% for key, value in dict.items() %}
                                 {% if key == "logo url"%}
                                     <br>
@@ -122,7 +174,42 @@
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
-                        {% else %}
+                        </div>
+
+                    {%elif loop.index == 2 %}
+                        <br>
+                        
+                        <div class="container">
+                            <h1 style="color: black";> Latest News </h1>
+                            {% for key, value in dict.items() %}
+                                <h3>{{key}}</h3><a href={{value}}> {{value}}</a>
+                            {%endfor%}
+                        </div>
+
+                    {%elif dict.c_title %}
+                        <br>
+                        
+                        <div class="container">
+                            {%for key, value in dict.items()%}
+                                {%if key == 'c_title'%}
+                                    <h1 style="color: black";> {{value}} </h1>
+                                {%elif key == 'img'%}
+                                    <img src={{value}} alt="article thumbnail">
+                                {%elif key == 'text'%}
+                                    <p>{{value}}</p>
+                                {%else%}
+                                    <a href={{value}}>{{value}}</a>
+                                {%endif%}
+                            {%endfor%}
+                        </div>
+
+                    {%else%}
+                        <br>
+
+                        <div class="container">
+                            {% if 'ProgrammingLanguage' in dict.items() %}
+                                <h1 style="color: black";> Tech Stack</h1>
+                            {%endif%}
                             {% for key, value in dict.items() %}
                                 {% if value is iterable and (value is not string and value is not mapping) %}
                                     <h3 style="font-size: 30px;">{{key}}</h3>
@@ -132,11 +219,20 @@
                                 {%else%}
                                     <h3>{{key}}</h3><a href={{value}}> {{value}}</a>
                                 {%endif%}
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                </div>
+                            {%endfor%}
+                        </div>
+
+                    {%endif%}
+                {%endfor%}
             {% endif %}
         </form>
+        <footer class="result-footer">
+            <br>
+            <br>
+            <a style="font-size: large;" href="https://www.linkedin.com/in/tyson-murray-driver-ba9798239/"> Tyson Murray-Driver</a>
+            <br>
+            <br>
+            <a style="font-size: large;" href="https://www.linkedin.com/in/darwinsgomez?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B3woVh7DOQiGfgGRV%2F3AClQ%3D%3D"> Darwin Gomez</a>
+        </footer>
     </body>
 </html>

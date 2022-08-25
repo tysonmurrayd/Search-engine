@@ -238,6 +238,7 @@ def scrape_broadcom(url):
 def retrieve_news(input, news):
 	# scrape_dynamic.start_driver()
 	r_list = []
+	master_dict = {}
 	news_url = "https://cybernews.com/search/"
 	wired_url = "https://www.wired.com/search/?q="
 	nyt_url = "https://www.nytimes.com/search?query="
@@ -249,19 +250,20 @@ def retrieve_news(input, news):
 
 
 	if 'g-news' in news:
-		r_list.append(get_news(news_url + input))
-		r_list.append(scrape_wired(wired_url + input))
-		r_list.append(scrape_nyt(nyt_url + input))
+		master_dict.update(scrape_wired(wired_url + input))
+		master_dict.update(scrape_nyt(nyt_url + input))
 	elif 'c-news' in news:
-		r_list.append(scrape_krebs(krebs_url + input))
-		r_list.append(call_api.get_DarkReading(input))
+		master_dict.update(get_news(news_url + input))
+		master_dict.update(scrape_krebs(krebs_url + input))
+		master_dict.update(call_api.get_DarkReading(input))
 	else:
-		r_list.append(get_news(news_url + input))
-		r_list.append(scrape_wired(wired_url + input))
-		r_list.append(scrape_nyt(nyt_url + input))
-		r_list.append(scrape_krebs(krebs_url + input))
-		r_list.append(call_api.get_DarkReading(input))
-
+		master_dict.update(get_news(news_url + input))
+		master_dict.update(scrape_wired(wired_url + input))
+		master_dict.update(scrape_nyt(nyt_url + input))
+		master_dict.update(scrape_krebs(krebs_url + input))
+		master_dict.update(call_api.get_DarkReading(input))
+	
+	r_list.append(master_dict)
 	# r_list.append(get_news(news_url + input))
 	# r_list.append(scrape_wired(wired_url + input))
 	# r_list.append(scrape_nyt(nyt_url + input))

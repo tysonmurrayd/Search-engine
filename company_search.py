@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import sys
 from PIL import Image
 import urllib.request
-import scrape_cybernews, cisa, json_handler, industry_news, technology
+import scrape_cybernews, cisa, json_handler, industry_news, technology, scrape_cisa
 import concurrent.futures
 import time
 
@@ -185,6 +185,10 @@ def from_website(input, news):
 	r_list.append(info_dict)
 	input = input.replace("_", " ")
 	r_list += scrape_cybernews.retrieve_news(input, news) + technology.get_tech(input)
+	if 'CISA' in info_dict:
+		print("wtf!")
+		print(info_dict['CISA'])
+		r_list += scrape_cisa.cisa_info(info_dict['CISA'])
 	return r_list
 
 def main():
@@ -205,5 +209,5 @@ def main():
 #     executor.map(from_website)
 
 
-# d = from_website('walmart')
+# d = from_website('walmart', '')
 # print(d)
