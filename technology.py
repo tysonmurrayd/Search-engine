@@ -55,8 +55,9 @@ def get_tech(company):
         search_name = first_result['slug']
 
         r_list = []
-        r_list.append(tech_stack(search_name))
-        r_list.append(articles(search_name))
+        m_dict = tech_stack(search_name)
+        m_dict.update(articles(search_name))
+        r_list.append(m_dict)
     except Exception:
         return []
 

@@ -1,67 +1,111 @@
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <!-- <link href="/var/www/html/flask_app/templates/search_style.css" rel="stylesheet" type="text/css"> -->
         <style>
+            /* body {
+            background-color: rgb(0, 255, 217);
+            } */
             html, body {
+                margin: 0%;
                 width: 100%;
                 height:100%;
             }
             body {
                 background: white;
             }
-            .search-bar {
+            /* .search-bar {
                 position: absolute;
                 top: 15%;
                 left: 34%;
                 right: 32%;
-                /* transform: translate(-50%, -50%); */
                 background: #D3D3D3;
-                height: 40px;
+                height: 50px;
                 border-radius: 40px;
                 padding: 25px;
-            }
+            } */
             #container {
                 position: absolute;
-                top: 30%;
-                width: 60%;
+                top: 40%;
                 border: 5px solid black;
                 left: 15%;
                 right: 15%;
                 background-color: aliceblue;
-                border-radius: 50px;
+                /* border-radius: 50px; */
                 padding: 40px;
             }
-            #name {
+            #banner {
+                /* bottom: 60%; */
+                width: 100%;
+                height: 270px;
+                background-color: #3498db;
+                background-position: center;
+                border-width: 5px;
+                border-color: black;
+                animation: fade-in 2s;
+            }
+            .name {
                 position: absolute;
-                left: 3%;
-                right: 15%;
+                top: 15%;
+                left: 25%;
+                right: 25%;
                 height: 5px;
                 border-radius: 20px;
                 padding: 20px;
-                /* width: 500px;  */
             }
             .file_submit {
                 position: absolute;
-                right: 5%;
-                width: 50px;
-                height: 40px;
+                top: 15%;
+                right: 23%;
+                width: 60px;
+                height: 49px;
                 border: 1px solid beige;
                 font-size: 20px;
-                border-radius: 50px;
+                border-bottom-right-radius: 50%;
+                border-top-right-radius: 50%;
                 cursor: pointer;
+            }
+            #industry {
+                position: absolute;
+                top: 23%;
+                left: 28%;
+            }
+            #check_label {
+                position: absolute;
+                top: 23%;
+                left: 30%;
+                animation: drop-down;
+            }
+            #n-input {
+                position: absolute;
+                top: 21%;
+                left: 38%;
+                height: 50pxpx;
+            }
+            .links {
+                position: absolute;
+                right: 5%;
+            }
+            .fade-in {
+                animation: fade-in 2s;
+            }
+            @keyframes fade-in{
+                0% { opacity: 0; }
+                100% { opacity: 1; }
             }
             #loader {
                 visibility: hidden;
                 display: none;
                 position: absolute;
-                top: 35%;
+                top: 45%;
                 left: 46%;
                 border: 16px solid #f3f3f3;
                 border-top: 16px solid #3498db;
                 border-radius: 50%;
-                width: 120px;
-                height: 120px;
+                width: 100px;
+                height: 100px;
                 animation: spin 2s linear infinite;
             }
 
@@ -72,9 +116,6 @@
         </style>
     </head>
     <body>
-        <center>
-            <h1 style="color: black; font-size: 60px;"> Company Search </h1>
-        </center>
         <script type="text/javascript">// <![CDATA[
             function loading(){
                 $("#loader").css('visibility', 'visible');
@@ -84,9 +125,28 @@
         </script>
         <div id="loader"></div>
         <form class = "grid" action="/result" method="POST">
-            <div class="search-bar">
-                <input type="text" name="name" id="name" placeholder="Try Searching a Company ;)">
+            <div id="banner">
+                <div class="links">
+                    <a href="{{ url_for('logout') }}" title="Logout"> Logout </a>
+                </div>
+                <div class="navbar">
+                    <a href="/home"> <img src="https://lh3.googleusercontent.com/4DDY-4VyLHHqbmcbRWM6_HJ3D9TrwEmEPAwUOb5C4P7eRPuaVHa0yp5oefwvupiudLNfsSA5KRBKho1IjPlEzyBtCbZRNIwstKg2=s0" alt="apollo logo"></a>
+                </div>
+                <input type="text" name="name" class="name" maxlength="75" placeholder="Try Searching a Company ;)">
                 <button type="Submit" class="file_submit" onclick="loading()"> <i class="fa fa-search"> </i></button>
+                <input type="checkbox" id="industry" name="industry">
+                <label for="industry" id="check_label" style="font: consolas;"> Include industry news</label>
+                <fieldset id="n-input">
+                    <legend>News</legend>
+                    <label for="General News">General News</label>
+                    <input type="radio" value="g-news" name="inputted-news">
+
+                    <label for="Cyber News">Cyber News</label>
+                    <input type="radio" value="c-news" name="inputted-news">
+
+                    <label for="All">All</label>
+                    <input type="radio" value="a-news" name="inputted-news" checked>
+                </fieldset>
             </div>
             <!-- {% if name %}
                 <div id="container">

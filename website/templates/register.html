@@ -16,7 +16,9 @@
             	</ul>
 			</div>
 		</nav>
-
+	{% if Error_msg %}
+		<h3 style="color: red; position: absolute; left: 43%; top: 30%;">{{Error_msg}}</h3>
+	{%endif%}
 	<div class = "input">
         <h1>AIS Web Scraper Registration</h1>
 	    <h2>Please enter the requested information below!</h2>
@@ -24,6 +26,21 @@
 		<form method="POST" action="/register">
     		<div class="input-group">
   	  			<label>Name:</label>
+  	  			<input type="text" maxlength="15" name="name">
+  			</div>
+  			<div class="input-group">
+  	  			<label>Email:</label>
+  	  			<input type="text" maxlength="50" name="email">
+  			</div>
+  			<!-- <div class="input-group">
+  	  			<label>Password:</label>
+  	  			<input type="password" maxlength="30" name="password">
+  			</div> -->
+			<br>
+			<div class="nightly-mail">
+				<input type="checkbox" id="n-mail" name="n-mail" style="position: absolute; left: 47%; top: 42%;">
+                <label for="n-mail" id="check_label" style="font: consolas; position: absolute; right: 44%; top: 41%; width: 150px;"> Subscribe to our weekly news letter</label>
+			</div>
   	  			<input type="text" name="name">
   			</div>
   			<div class="input-group">

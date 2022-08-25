@@ -1,0 +1,97 @@
+/* body {
+    background-color: rgb(0, 255, 217);
+} */
+html, body {
+    margin: 0%;
+    width: 100%;
+    height:100%;
+}
+body {
+    background: white;
+}
+/* .search-bar {
+    position: absolute;
+    top: 15%;
+    left: 34%;
+    right: 32%;
+    background: #D3D3D3;
+    height: 50px;
+    border-radius: 40px;
+    padding: 25px;
+} */
+#container {
+    position: absolute;
+    top: 40%;
+    width: 60%;
+    border: 5px solid black;
+    left: 15%;
+    right: 15%;
+    background-color: aliceblue;
+    /* border-radius: 50px; */
+    padding: 40px;
+}
+#banner {
+    /* bottom: 60%; */
+    width: 100%;
+    height: 270px;
+    background-color: #3498db;
+    background-position: center;
+    border-width: 5px;
+    border-color: black;
+}
+#name {
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    right: 25%;
+    height: 5px;
+    border-radius: 20px;
+    padding: 20px;
+    /* width: 500px;  */
+}
+.file_submit {
+    position: absolute;
+    top: 15%;
+    right: 20%;
+    width: 50px;
+    height: 40px;
+    border: 1px solid beige;
+    font-size: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+#industry {
+    position: absolute;
+    top: 75%;
+    left: 5%;
+}
+#check_label {
+    position: absolute;
+    top: 75%;
+    left: 10%;
+}
+.fade-in {
+    animation: fade-in 2s;
+}
+@keyframes fade-in{
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+#loader {
+    visibility: hidden;
+    display: none;
+    position: absolute;
+    top: 45%;
+    left: 46%;
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
